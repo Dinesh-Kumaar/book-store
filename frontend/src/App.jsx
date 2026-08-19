@@ -3,8 +3,8 @@ import Main from './components/Main'
 import Cart from './components/Cart'
 import ProductList from './components/ProductList'
 import WishList from './components/WishList'
-import SignUp from "./Components/login/SignUp";
-import SignIn from "./Components/login/SignIn";
+import SignUp from "./components/login/SignUp";
+import SignIn from "./components/login/SignIn";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
