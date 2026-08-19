@@ -13,7 +13,7 @@ const registerUser = async (req, res) => {
             });
         }
 
-        const existingUser = await UserModel.findOne({ email });
+        const existingUser = await User.findOne({ email });
 
         if (existingUser) {
             return res.status(400).json({
@@ -31,7 +31,7 @@ const registerUser = async (req, res) => {
                 .json({ success: false, message: "Password hashing failed" });
         }
 
-        const newuser = await UserModel.create({
+        const newuser = await User.create({
             name,
             email,
             password: hashedPassword,
@@ -68,7 +68,7 @@ const loginUser = async (req, res) => {
             });
         }
 
-        const user = await UserModel.findOne({ email });
+        const user = await User.findOne({ email });
         console.log("User: ", user);
 
         if (!user) {
@@ -107,7 +107,7 @@ const updateUser = async (req, res) => {
     try {
         const { name, email, role } = req.body;
 
-        const user = await UserModel.findById(req.params.id);
+        const user = await User.findById(req.params.id);
 
         if (!user) {
             return res.status(404).json({
@@ -137,7 +137,7 @@ const updateUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
     try {
-        const deletedUser = await UserModel.findByIdAndDelete(req.params.id);
+        const deletedUser = await User.findByIdAndDelete(req.params.id);
         console.log("User: ", deletedUser);
 
         if (!deletedUser) {
@@ -165,7 +165,7 @@ const deleteUser = async (req, res) => {
 // get user by id
 const getUserById = async (req, res) => {
     try {
-        const user = await UserModel.findById(req.user.id).select("-password"); // params = parameter in the URL
+        const user = await User.findById(req.user.id).select("-password"); // params = parameter in the URL
         if (!user) {
             return res.status(404).json({
                 success: false,
