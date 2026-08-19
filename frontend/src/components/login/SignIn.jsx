@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 import { loginSuccess } from '../../features/user/userSlice.js'
 import { useState } from 'react';
 import axios from 'axios';
-import API from '../api'
+import API from '../../api.js'
 
 export default function SignIn() {
 
