@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import axios from "axios";
+import API from '../api'
 
 const AdminProducts = () => {
   // 1. Create a state variable for each input field and products list
@@ -18,7 +19,7 @@ const AdminProducts = () => {
   // Fetch all products from backend
   const fetchProducts = async () => {
     try {
-      const resp = await axios.get("http://localhost:5000/products");
+      const resp = await API.get("/products");
       setProducts(resp.data.products || []);
     } catch (err) {
       console.log(err);

@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux'
 import { loginSuccess } from '../../features/user/userSlice.js'
 import { useState } from 'react';
 import axios from 'axios';
+import API from '../api'
 
 export default function SignIn() {
 
@@ -25,7 +26,7 @@ export default function SignIn() {
     setErrorMsg("");
     setLoading(true);
     try {
-      const res = await axios.post("http://localhost:5000/signin", {
+      const res = await API.post("/signin", {
         email,
         password,
       });

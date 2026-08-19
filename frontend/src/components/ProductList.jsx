@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../features/cart/cartSlice.js';
 import { addToList, removeFromList } from '../features/wishlist/wishListSlice.js';
 import axios from 'axios';
+import API from '../api'
 import Navbar from './Navbar.jsx';
 import Footer from './Footer.jsx';
 import { useNavigate } from 'react-router-dom';
@@ -25,7 +26,7 @@ const ProductList = () => {
         const fetchProducts = async () => {
             setLoading(true);
             try {
-                const response = await axios.get('http://localhost:5000/products');
+                const response = await API.get('/products');
                 if (response.data.success) {
                     setProducts(response.data.products || []);
                 } else {

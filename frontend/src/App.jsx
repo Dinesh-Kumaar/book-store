@@ -9,6 +9,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import axios from "axios";
+import API from './api'
 import { loginSuccess, logout } from "./features/user/userSlice";
 import ProtectedRoute from './components/ProtectedRoutes';
 import AdminProducts from './components/AdminProducts'
@@ -30,7 +31,7 @@ function App() {
       }
 
       try {
-        const res = await axios.get("http://localhost:5000/user", {
+        const res = await API.get("/user", {
           headers: {
             Authorization: `Bearer ${token}`,
           },

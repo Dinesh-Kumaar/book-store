@@ -4,6 +4,7 @@ import Footer from "./Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import API from '../api'
 import { clearCart } from "../features/cart/cartSlice";
 import {
   User,
@@ -92,7 +93,7 @@ const Checkout = () => {
         paymentMethod,
       };
 
-      const res = await axios.post("http://localhost:5000/create-order", addOrderPayload, {
+      const res = await API.post("/create-order", addOrderPayload, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

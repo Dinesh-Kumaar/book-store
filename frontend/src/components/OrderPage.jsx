@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import axios from "axios";
+import API from '../api'
 import { useSelector } from "react-redux";
 import {
   Package,
@@ -41,8 +42,8 @@ const OrderPage = () => {
     try {
       // Admin calls /getAllOrders, customer calls /getOrderById
       const endpoint = isAdmin
-        ? "http://localhost:5000/get-all-orders"
-        : "http://localhost:5000/get-order";
+        ? "/get-all-orders"
+        : "/get-order";
 
       const res = await axios.get(endpoint, {
         headers: {
@@ -67,8 +68,8 @@ const OrderPage = () => {
   const handleUpdateStatus = async (orderId, newStatus) => {
     setUpdatingStatusId(orderId);
     try {
-      const res = await axios.put(
-        `http://localhost:5000/update-order-status/${orderId}`,
+      const res = await API.put(
+        `/update-order-status/${orderId}`,
         { status: newStatus },
         {
           headers: {
@@ -96,7 +97,7 @@ const OrderPage = () => {
     if (!window.confirm("Are you sure you want to delete this order record?")) return;
     setDeletingOrderId(orderId);
     try {
-      await axios.delete(`http://localhost:5000/delete-order/${orderId}`, {
+      await API.delete(`/delete-order/${orderId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
