@@ -14,8 +14,8 @@ import ProtectedRoute from './components/ProtectedRoutes';
 import AdminProducts from './components/AdminProducts'
 import AdminRoutes from './components/AdminRoutes'
 import Checkout from './components/Checkout';
-import OrderPage from "./Components/OrderPage";
-import ProfilePage from "./Components/ProfilePage";
+import OrderPage from "./components/OrderPage";
+import ProfilePage from "./components/ProfilePage";
 
 function App() {
   const dispatch = useDispatch();
