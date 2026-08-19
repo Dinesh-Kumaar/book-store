@@ -24,7 +24,6 @@ function App() {
   useEffect(() => {
     const fetchUserProfile = async () => {
       const token = localStorage.getItem("token");
-      console.log("Token from localStorage:", token);
 
       if (!token) {
         return;
