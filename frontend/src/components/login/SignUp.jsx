@@ -33,7 +33,7 @@ export default function SignUp() {
         dispatch(loginSuccess({ user: response.data.user, token: response.data.token, }));
       }
       if (role === "admin") {
-        navigate("/admin/products");
+        navigate("/signin");
       } else {
         navigate("/signin");
       }
