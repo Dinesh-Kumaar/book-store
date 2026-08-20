@@ -51,17 +51,27 @@ const getAllOrders = async (req, res) => {
 
 const getOrder = async (req, res) => {
   try {
-    const order = await Order.findById(req.params.id)
-      .populate('items.product') // Adjust fields based on your productSchema
-      .populate('user'); // Adjust fields based on your userSchema
-
-    if (!order) {
-      return res.status(404).json({ success: false, message: 'Order not found' });
+    const userId = req.user?.id || req.user?._id;
+    if (!userId) {
+      return res.status(400).json({
+        success: false,
+        message: "userId is required",
+      });
     }
 
-    res.status(200).json({ success: true, data: order });
-  } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    const order = await Order.find({ user: userId })
+      .populate("user")
+      .populate("products.product");
+    res.status(200).json({
+      success: true,
+      message: "Order fetched successfully",
+      order,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
   }
 };
 
