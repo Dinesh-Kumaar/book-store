@@ -4,48 +4,29 @@ const User = require('../Model/UserModel');
 
 const addToOrder = async (req, res) => {
   try {
-    // 1. Destructure 'items' (the array) and user details from req.body
-    const { items, user, userName, mode } = req.body;
-
-    let totalOrderPrice = 0;
-    const processedItems = [];
-
-    // 2. Loop through each item in the array to verify it and calculate prices
-    for (const item of items) {
-      const foundProduct = await Product.findById(item.product);
-      if (!foundProduct) {
-        return res.status(404).json({
-          success: false,
-          message: `Product with ID ${item.product} not found`
-        });
-      }
-
-      const individualPrice = foundProduct.price;
-      const itemTotalPrice = individualPrice * item.quantity;
-      totalOrderPrice += itemTotalPrice;
-
-      // Push the processed item with its calculated prices into our array
-      processedItems.push({
-        product: item.product,
-        quantity: item.quantity,
-        individualPrice: individualPrice,
-        totalPrice: itemTotalPrice
-      });
-    }
-
-    // 3. Create the new order with the processed items array
-    const newOrder = new Order({
-      items: processedItems, // Saves the entire array
-      totalOrderPrice,       // The grand total for the whole order
+    const {
       user,
+      products,
+      totalPrice,
       userName,
-      mode
-    });
+      phone,
+      address,
+      paymentMethod,
+    } = req.body;
 
-    const savedOrder = await newOrder.save();
-    res.status(201).json({ success: true, data: savedOrder });
-  } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    const order = await Order.create(req.body);
+
+    res.status(201).json({
+      success: true,
+      message: "Order placed successfully",
+      order,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
   }
 };
 
