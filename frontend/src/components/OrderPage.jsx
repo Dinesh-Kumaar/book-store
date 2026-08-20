@@ -41,9 +41,7 @@ const OrderPage = () => {
     setError("");
     try {
       // Admin calls /getAllOrders, customer calls /getOrderById
-      const endpoint = isAdmin
-        ? "/get-all-orders"
-        : "/get-order";
+      const endpoint = isAdmin ? "/get-all-orders" : "/get-order";
 
       const res = await API.get(endpoint, {
         headers: {
