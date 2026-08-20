@@ -107,28 +107,42 @@ const updateOrderStatus = async (req, res) => {
 };
 const updateOrder = async (req, res) => {
   try {
-    const { quantity, userName, mode } = req.body;
-    let updateData = { userName, mode };
+    const order = await Order.findById(req.params.id);
 
-    // If quantity changes, recalculate the price dynamically
-    if (quantity) {
-      const order = await Order.findById(req.params.id);
-      if (!order) {
-        return res.status(404).json({ success: false, message: 'Order not found' });
-      }
-      updateData.quantity = quantity;
-      updateData.totalPrice = order.individualPrice * quantity;
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        message: "Order not found",
+      });
     }
 
-    const updatedOrder = await Order.findByIdAndUpdate(
-      req.params.id,
-      { $set: updateData },
-      { new: true, runValidators: true }
-    );
+    const currentUserId = req.user?.id || req.user?._id;
+    if (currentUserId && order.user.toString() !== currentUserId.toString()) {
+      return res.status(403).json({
+        success: false,
+        message: "You can only update your own order",
+      });
+    }
 
-    res.status(200).json({ success: true, data: updatedOrder });
-  } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    const { userName, phone, address, paymentMethod } = req.body;
+
+    if (userName !== undefined) order.userName = userName;
+    if (phone !== undefined) order.phone = phone;
+    if (address !== undefined) order.address = address;
+    if (paymentMethod !== undefined) order.paymentMethod = paymentMethod;
+
+    const updatedOrder = await order.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Order updated successfully",
+      order: updatedOrder,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
   }
 };
 
