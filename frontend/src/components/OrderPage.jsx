@@ -45,7 +45,7 @@ const OrderPage = () => {
         ? "/get-all-orders"
         : "/get-order";
 
-      const res = await axios.get(endpoint, {
+      const res = await API.get(endpoint, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
