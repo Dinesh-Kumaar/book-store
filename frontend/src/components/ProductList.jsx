@@ -11,6 +11,7 @@ import Footer from './Footer.jsx';
 import { useNavigate } from 'react-router-dom';
 
 const ProductList = () => {
+    const navigate = useNavigate();x
     const dispatch = useDispatch();
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
